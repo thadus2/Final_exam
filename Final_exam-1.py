@@ -141,14 +141,14 @@ print(solution(2,3))                 #출력 결과 : 20
 #
 # numbers = [8, 30, 17, 2, 23]
 
-from itertools import permutations                              #순열을 이용하기 위한 모듈을 import 함
 def solution(numbers):
-    answer = ''
-    arr = list(permutations(map(str,numbers),len(numbers)))     #주어진 number 리스트를 모든 순열 리스트 arr로 변경
-    for i in range(len(arr)):
-        arr[i] = ''.join(arr[i])                                #arr내의 순열 튜플을 문자열로 합침
-    answer = max(arr)                                           #arr내의 순열 문자열중 가장 큰 값을 리턴함
+    numbers = list(map(str, numbers))                               #주어진 numbers 리스트의 모든 원소를 문자열로 바꾸어줌
+    for i in range (len(numbers)):
+        for j in range(i+1,len(numbers)):                           #각 원소들의 크기를 비교하기 위한 반복문
+            if (numbers[i] + numbers[j] < numbers[j] + numbers[i]): #i번째 원소와 j번째 원소를 조합하여 만든 문자열 크기 비교
+                numbers[i], numbers[j] = numbers[j], numbers[i]     #ex) 17과 2의 조합 172와 217을 비교하여 정렬
+    answer = ''.join(numbers)                                       #리스트를 구분 없이 하나의 문자열로 합침
     return answer
 
 numbers = [8, 30, 17, 2, 23]
-print(solution(numbers))                                        #출력 결과 : 83023217
+print(solution(numbers))                                      #출력 결과 : 83023217
